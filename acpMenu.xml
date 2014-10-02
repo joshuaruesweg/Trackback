@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/acpMenu.xsd">
+	<import>
+		<acpmenuitem name="wcf.acp.menu.link.trackback">
+			<parent>wcf.acp.menu.link.content</parent>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.trackback.blacklistlist">
+			<controller><![CDATA[wcf\acp\page\TrackbackBlacklistEntryListPage]]></controller>
+			<parent>wcf.acp.menu.link.trackback</parent>
+			<showorder>1</showorder>
+			<options>module_trackback</options>
+		</acpmenuitem>
+                
+		<acpmenuitem name="wcf.acp.menu.link.trackback.blacklistadd">
+			<controller><![CDATA[wcf\acp\page\TrackbackBlacklistEntryAddForm]]></controller>
+			<parent>wcf.acp.menu.link.trackback</parent>
+			<showorder>2</showorder>
+			<options>module_trackback</options>
+		</acpmenuitem>
+	</import>
+</data>
