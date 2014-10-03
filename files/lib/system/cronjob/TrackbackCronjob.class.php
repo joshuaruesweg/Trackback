@@ -19,6 +19,12 @@ class TrackbackCronjob extends AbstractCronjob {
 	const MAXFAILCOUNT = 3; 
 	
 	/**
+	 * additional update data
+	 * @var array<mixed> 
+	 */
+	public $additional = array(); 
+	
+	/**
 	 * @see	wcf\system\cronjob\ICronjob::execute()
 	 */
 	public function execute(Cronjob $cronjob) {
@@ -42,9 +48,20 @@ class TrackbackCronjob extends AbstractCronjob {
 				
 				if (strpos($body, $targetURI) === false) {
 					$this->increaseFailCount($trackback);
+				} else {
+					// reset count
+					$this->additional['failedCount'] = 0; 
 				}
 			} catch (\Exception $e) {
 				$this->increaseFailCount($trackback);
+			}
+			
+			if (isset($this->additional['failedCount'])) {
+				// update object 
+				$editor = new \wcf\data\trackback\TrackbackEditor($trackback); 
+				$editor->update(array_merge(array(
+					'lastCheckTime' => TIME_NOW
+				), $this->additional)); 
 			}
 		}
 	}
@@ -57,10 +74,7 @@ class TrackbackCronjob extends AbstractCronjob {
 	 */
 	public function increaseFailCount(\wcf\data\trackback\Trackback $trackback) {
 		if ($trackback->failedCount < 2) {
-			$editor = new \wcf\data\trackback\TrackbackEditor($trackback); 
-			$editor->updateCounters(array(
-			    'failedCount' => 1
-			)); 
+			$this->additional['failedCount'] = $trackback->failedCount + 1; 
 		} else {
 			$action = new \wcf\data\trackback\TrackbackAction(array($trackback), 'delete');
 			$action->validateAction(); 
