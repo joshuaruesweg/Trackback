@@ -1,7 +1,7 @@
-{include file='header' pageTitle='wcf.trackback.blacklist.list'}
+{include file='header' pageTitle='wcf.trackback.blacklist.entry.list'}
 
 <header class="boxHeadline">
-	<h1>{lang}wcf.trackback.blacklist.list{/lang}</h1>
+	<h1>{lang}wcf.trackback.blacklist.entry.list{/lang}</h1>
 
 	<script data-relocate="true" type="text/javascript">
 		//<![CDATA[
@@ -13,7 +13,7 @@
 </header>
 
 <div class="contentNavigation">
-	{pages print=true assign=pagesLinks controller="JCoinsPremiumList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
+	{pages print=true assign=pagesLinks controller="TrackbackBlacklistEntryList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
 	
 	<nav>
 			<ul>
@@ -31,7 +31,7 @@
 {hascontent}
 	<div class="tabularBox tabularBoxTitle marginTop">
 		<header>
-			<h2>{lang}wcf.trackback.blacklist.list{/lang} <span class="badge badgeInverse">{#$items}</span></h2>
+			<h2>{lang}wcf.trackback.blacklist.entry.list{/lang} <span class="badge badgeInverse">{#$items}</span></h2>
 		</header>
 
 		<table class="table">

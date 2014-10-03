@@ -22,6 +22,7 @@
 		<!-- files -->
 		<instruction type="file">files.tar</instruction>
 		<instruction type="template">templates.tar</instruction>
+		<instruction type="acpTemplate">acptemplates.tar</instruction>
 		
 		<!-- xml -->
 		<instruction type="option">option.xml</instruction>
@@ -41,6 +42,7 @@
 		<!-- files -->
 		<instruction type="file">files.tar</instruction>
 		<instruction type="template">templates.tar</instruction>
+		<instruction type="acpTemplate">acptemplates.tar</instruction>
 		
 		<!-- xml -->
 		<instruction type="option">option.xml</instruction>
