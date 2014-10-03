@@ -90,8 +90,6 @@ class TrackbackAction extends AbstractAction {
 	public function readParameters() {
 		parent::readParameters();
 		
-		$this->checkAccessToken(); 
-		
 		if (isset($_REQUEST['objectType'])) $this->objectTypeName = StringUtil::trim($_REQUEST['objectType']); 
 		if (isset($_REQUEST['objectID'])) $this->objectID = intval($_REQUEST['objectID']); 
 		
