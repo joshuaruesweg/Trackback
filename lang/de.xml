@@ -3,4 +3,13 @@
 	<category name="wcf.trackback">
 		<item name="wcf.trackback.blacklist.item.add"><![CDATA[Eintrag hinzufügen]]></item>
 	</category>
+	
+	<category name="wcf.acp.option">
+		<item name="wcf.acp.option.module_trackback"><![CDATA[Trackback]]></item>
+		<item name="wcf.acp.option.category.message.trackback"><![CDATA[Trackback]]></item>
+		
+		<item name="wcf.acp.option.trackback_check_url"><![CDATA[URL Prüfung für Trackbacks]]></item>
+		<item name="wcf.acp.option.enable_trackback_check"><![CDATA[Trackback-Check]]></item>
+		<item name="wcf.acp.option.enable_trackback_check.description"><![CDATA[Ist diese Option, werden alle Trackbacks automatisch und regelmäßig auf Verfügbarkeit und Validität geprüft und ggf. automatisch gelöscht.]]></item>
+	</category>
 </language>

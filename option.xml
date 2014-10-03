@@ -20,12 +20,6 @@
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
-			
-			<option name="trackback_autoping">
-				<categoryname>message.trackback</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-			</option>
                         
 			<option name="enable_trackback_check">
 				<categoryname>message.trackback</categoryname>

@@ -20,7 +20,7 @@
 				<li>
 					<a href="{link controller='TrackbackBlacklistEntryAdd'}{/link}" class="button">
 						<span class="icon icon16 icon-plus"></span> 
-						<span>{lang}wcf.trackback.blacklist.add{/lang}</span>
+						<span>{lang}wcf.trackback.blacklist.entry.add{/lang}</span>
 					</a>
 				</li>
 			</ul>
@@ -77,7 +77,7 @@
 			<li>
 				<a href="{link controller='TrackbackBlacklistEntryAdd'}{/link}" class="button">
 					<span class="icon icon16 icon-plus"></span> 
-					<span>{lang}wcf.trackback.blacklist.add{/lang}</span>
+					<span>{lang}wcf.trackback.blacklist.entry.add{/lang}</span>
 				</a>
 			</li>
 		</ul>

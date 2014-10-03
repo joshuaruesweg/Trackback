@@ -3,7 +3,6 @@ namespace wcf\util;
 use wcf\system\request\RouteHandler;
 use wcf\system\cache\builder\ControllerCacheBuilder;
 use wcf\util\TrackbackUtil;
-use wcf\system\Regex; 
 
 /**
  * 
@@ -144,30 +143,10 @@ final class PingbackUtil {
 	 * @param \wcf\data\ITrackbackableObject	$trackback
 	 */
 	public static function autoPing($text, \wcf\data\ITrackbackableObject $trackback) {
-		// @see https://github.com/WoltLab/WCF/blob/master/wcfsetup/install/files/lib/system/bbcode/PreParser.class.php#L122
-		$urlPattern = new Regex('
-		(?<!\B|"|\'|=|/|\]|,|\?|\.)
-		(?:						# hostname
-			(?:ftp|https?)://'.static::$illegalChars.'(?:\.'.static::$illegalChars.')*
-			|
-			www\.(?:'.static::$illegalChars.'\.)+
-			(?:[a-z]{2,63}(?=\b))			# tld
-		)
-
-		(?::\d+)?					# port
-
-		(?:
-			/
-			[^!.,?;"\'<>()\[\]{}\s]*
-			(?:
-				[!.,?;(){}]+ [^!.,?;"\'<>()\[\]{}\s]+
-			)*
-		)?', Regex::IGNORE_WHITESPACE | Regex::CASE_INSENSITIVE);
-		$urlPattern->match($text);
-		$matches = $urlPattern->getMatches(); 
+		preg_match_all('~\[url\](https?:\/\/[a-zA-Z0-9\.:@\-]*\.?[a-zA-Z0-9äüö\-]+\.[A-Za-z]{2,8}(:[0-9]{1,4})?(\/[^#\]]*)?(#[^#]+)?)\[\/url\]~i', $text, $matches, PREG_SET_ORDER);
 		
 		foreach ($matches as $match) {
-			self::ping($match[0], $trackback);
+			self::ping($match[1], $trackback);
 		}
 	}
 	
@@ -181,7 +160,7 @@ final class PingbackUtil {
 		
 		if ($server !== null) {
 			// we can ping it
-			$request = new HTTPRequest($server, array(), ''); 
+			$request = new HTTPRequest($server, array(), self::getPingRequest($trackback->getLink(), $url)); 
 			$request->execute(); 
 		} 
 	}
@@ -208,6 +187,11 @@ final class PingbackUtil {
 	}
 	
 	public static function getPingRequest($source, $target) {
+		\wcf\system\WCF::getTPL()->assign(array(
+			'source' => $source, 
+			'target' => $target
+		));
 		
+		return \wcf\system\WCF::getTPL()->fetch('pingbackPingCall'); 
 	}
 }
