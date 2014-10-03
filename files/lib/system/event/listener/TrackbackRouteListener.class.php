@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\event\listener;
 use wcf\system\event\IEventListener;
+use wcf\system\request\Route; 
 
 /**
  * 
