@@ -1,6 +1,5 @@
 <?php
 namespace wcf\action; 
-
 use wcf\action\AbstractAction;
 use Zend\XmlRpc\Server as XmlRpcServer; 
 use Zend\Loader\StandardAutoloader as ZendLoader;
@@ -54,7 +53,7 @@ class PingbackAction extends AbstractAction {
 		$this->server->setClass('\wcf\system\trackback\PingbackHandler', 'pingback');
 		
 		// set content type 
-		header("Content-Type:text/xml");
+		@header("Content-Type: text/xml");
 	}
 	
 	/**
@@ -66,11 +65,11 @@ class PingbackAction extends AbstractAction {
 		$this->server->setReturnResponse(true);
 		$handle = $this->server->handle(); 
 		
-		if (!$handle instanceof \Zend\XmlRpcServer\Fault && !$handle instanceof \Zend\XmlRpc\Fault) {
+		if (!($handle instanceof \Zend\XmlRpcServer\Fault) && !($handle instanceof \Zend\XmlRpc\Fault)) {
 			$value = $handle->getReturnValue(); 
 		}
 		
-		if (!$handle instanceof \Zend\XmlRpcServer\Fault && !$handle instanceof \Zend\XmlRpc\Fault && is_array($value) && $value['error']) {
+		if (!($handle instanceof \Zend\XmlRpcServer\Fault) && !($handle instanceof \Zend\XmlRpc\Fault) && is_array($value) && $value['error']) {
 			echo $this->server->fault($value['message'], $value['code']);
 		} else {
 			echo $handle; 

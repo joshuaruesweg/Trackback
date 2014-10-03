@@ -1,6 +1,5 @@
 <?php
 namespace wcf\util;
-
 use wcf\system\request\RouteHandler;
 use wcf\system\cache\builder\ControllerCacheBuilder;
 use wcf\util\TrackbackUtil;
@@ -19,7 +18,7 @@ use wcf\system\Regex;
 final class PingbackUtil {
 	
 	/**
-	 * fetch the objectTypeID from a specefic url. If the URL hasn't a
+	 * fetch the objectTypeID from a specific url. If the URL hasn't a
 	 * objectTypeID, the method returns false. 
 	 * 
 	 * @param	mixed	 $url

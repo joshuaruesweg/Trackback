@@ -23,6 +23,9 @@ class TrackbackAction extends AbstractDatabaseObjectAction {
 	
 	public $permissionCreate = 'user.message.canAddTrackback'; 
 	
+	/**
+	 * @see \wcf\data\AbstractDatabaseObjectAction::validateCreate()
+	 */
 	public function validateCreate() {
 		parent::validateCreate();
 		
@@ -63,11 +66,14 @@ class TrackbackAction extends AbstractDatabaseObjectAction {
 		$proccessor = $objectType->getProcessor();
 		$object = $proccessor->getObjectByID($this->parameters['data']['objectID']); 
 		
-		if ($object === null || $object->getObjectID() == 0) {
+		if (!$object || !$object->getObjectID()) {
 			throw new UserInputException('invalid objectID');
 		}
 	}
 	
+	/**
+	 * marks a trackback as spam
+	 */
 	public function markAsSpam() {
 		$action = new TrackbackAction($this->getObjects(), 'update', array('data' => array('isBlocked' => 1))); 
 		$action->executeAction(); 
@@ -76,14 +82,16 @@ class TrackbackAction extends AbstractDatabaseObjectAction {
 			$url = parse_url($object->url); 
 			$host = $url['host']; 
 			
-			$action = new blacklist\entry\TrackbackBlacklistEntryAction(array(), 'create', array('data' => array('host' => $host)));
-			$action->validateAction(); 
+			$action = new \wcf\data\trackback\blacklist\entry\TrackbackBlacklistEntryAction(array(), 'create', array('data' => array('host' => $host)));
 			$action->executeAction(); 
 		}
 	}
 	
+	/**
+	 * validate the action markAsSpam
+	 */
 	public function validateMarkAsSpam() {
-		// permission check.. 
+		// @TODO permission check.. 
 	}
 }
  

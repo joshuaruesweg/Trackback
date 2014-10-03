@@ -1,6 +1,5 @@
 <?php
 namespace wcf\acp\form; 
-
 use wcf\form\AbstractForm; 
 use wcf\util\StringUtil; 
 use wcf\system\WCF; 
@@ -30,6 +29,12 @@ class TrackbackBlacklistEntryAddForm extends AbstractForm {
 	public $host = '';
 	
 	/**
+	 * additional parameters
+	 * @var array<mixed> 
+	 */
+	public $additionalParameters = array();
+	
+	/**
 	 * @see	\wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
@@ -55,8 +60,8 @@ class TrackbackBlacklistEntryAddForm extends AbstractForm {
 	public function save() {
 		parent::save();
 		
-		$action = new \wcf\data\trackback\blacklist\entry\TrackbackBlacklistEntryAction(array(), 'create', array('data' => array('host' => $this->host)));
-		$action->executeAction(); 
+		$this->objectAction = new \wcf\data\trackback\blacklist\entry\TrackbackBlacklistEntryAction(array(), 'create', array_merge(array('data' => array('host' => $this->host))), $this->additionalParameters);
+		$this->objectAction->executeAction(); 
 		
 		$this->saved(); 
 		

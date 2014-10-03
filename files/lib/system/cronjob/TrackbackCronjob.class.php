@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\cronjob;
-
 use wcf\data\cronjob\Cronjob;
 
 /**
@@ -35,10 +34,10 @@ class TrackbackCronjob extends AbstractCronjob {
 		
 		foreach ($list as $trackback) {
 			try {
-				$http = new \wcf\util\HTTPRequest($trackback->url);
-				$http->execute();
+				$request = new \wcf\util\HTTPRequest($trackback->url);
+				$request->execute();
 				
-				$reply = $http->getReply();
+				$reply = $request->getReply();
 				$body = $reply['body'];
 				
 				if (strpos($body, $targetURI) === false) {
@@ -50,6 +49,12 @@ class TrackbackCronjob extends AbstractCronjob {
 		}
 	}
 
+	/**
+	 * increase the fail count for one object and if the failcount
+	 * is 2 or more, the object will be deleted
+	 * 
+	 * @param \wcf\data\trackback\Trackback $trackback
+	 */
 	public function increaseFailCount(\wcf\data\trackback\Trackback $trackback) {
 		if ($trackback->failedCount < 2) {
 			$editor = new \wcf\data\trackback\TrackbackEditor($trackback); 

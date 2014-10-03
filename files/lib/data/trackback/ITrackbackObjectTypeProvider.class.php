@@ -20,5 +20,5 @@ interface ITrackbackObjectTypeProvider extends IObjectTypeProvider {
 	 * @param	\wcf\data\ITrackbackableObject	$object
 	 * @return	boolean
 	 */
-	public function checkPermissions(ITrackbackableObject $object);
+	public function hasPermissions(ITrackbackableObject $object);
 }

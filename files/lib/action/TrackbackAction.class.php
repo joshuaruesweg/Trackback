@@ -1,16 +1,10 @@
 <?php
 namespace wcf\action; 
-
 use wcf\action\AbstractAction;
-use wcf\data\user\User;
 use wcf\data\object\type\ObjectTypeCache; 
 use wcf\system\event\EventHandler;
-use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException; 
-use wcf\system\message\censorship\Censorship; 
-use wcf\system\session\SessionHandler;
-use wcf\system\WCF;
-use wcf\util\PasswordUtil;
+use wcf\system\message\censorship\Censorship;
 use wcf\util\StringUtil;
 use wcf\util\TrackbackUtil;  
 
@@ -52,7 +46,7 @@ class TrackbackAction extends AbstractAction {
 	 * the objectProcessor for $objectType
 	 * @var string 
 	 */
-	public $objectProccessor = null; 
+	public $objectProcessor = null; 
 	
 	/**
 	 * the object type
@@ -110,8 +104,8 @@ class TrackbackAction extends AbstractAction {
 		// read object
 		$this->objectType = ObjectTypeCache::getInstance()->getObjectTypeByName(TrackbackUtil::DEFINITION_NAME, $this->objectTypeName); 
 		if ($this->objectType !== null) {
-			$this->objectProccessor = $this->objectType->getProcessor();
-			if ($this->objectProccessor !== null) $this->object = $this->objectProccessor->getObjectByID($this->objectID); 
+			$this->objectProcessor = $this->objectType->getProcessor();
+			if ($this->objectProcessor !== null) $this->object = $this->objectProcessor->getObjectByID($this->objectID); 
 		}
 		
 		try {
@@ -129,7 +123,7 @@ class TrackbackAction extends AbstractAction {
 				$array['debug']['blog_name'] = StringUtil::encodeHTML($this->blogName); 
 			}
 			
-			header("Content-Type:text/xml");
+			@header("Content-Type: text/xml");
 			echo TrackbackUtil::createTrackbackAnswer(false, $array);
 			exit; 
 		}
@@ -141,7 +135,7 @@ class TrackbackAction extends AbstractAction {
 	public function validate() {
 		EventHandler::getInstance()->fireAction($this, 'validate'); 
 		
-		if ($this->object === null || $this->object->getObjectID() == 0) {
+		if (!$this->object || !$this->object->getObjectID()) {
 			throw new UserInputException('unknown object'); 
 		}
 		
@@ -179,7 +173,7 @@ class TrackbackAction extends AbstractAction {
 		
 		$this->executed(); 
 		
-		header("Content-Type:text/xml");
+		@header("Content-Type: text/xml");
 		echo TrackbackUtil::createTrackbackAnswer();
 		exit; 
 	}

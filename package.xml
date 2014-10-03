@@ -4,7 +4,7 @@
 		<packagename><![CDATA[Trackback]]></packagename>
 		<packagedescription><![CDATA[A Trackback-system.]]></packagedescription>
 		<packagedescription language="de"><![CDATA[Ein Trackback-System.]]></packagedescription>
-		<version>1.0.0 Alpha 1</version> <!-- codename burningpress -->
+		<version>1.0.0 Alpha 1</version>
 		<date>2014-09-08</date>
 	</packageinformation>
 	

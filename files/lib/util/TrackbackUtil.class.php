@@ -1,6 +1,5 @@
 <?php
 namespace wcf\util;
-
 use wcf\data\ITrackbackableObject;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -65,7 +64,7 @@ final class TrackbackUtil {
 		$writer = new XMLWriter();
 		$writer->beginDocument('methodResponse', 'com.hg-202', 'com.hg-202'); // <- TODO 
 		
-		$writer->writeElement('error', (!$success) ? 1 : 0);
+		$writer->writeElement('error', ($success) ? 0 : 1);
 
 		self::buildDOM($writer, $parameters);
 

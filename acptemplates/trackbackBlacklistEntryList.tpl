@@ -6,7 +6,7 @@
 	<script data-relocate="true" type="text/javascript">
 		//<![CDATA[
 		$(function() {
-			new WCF.Action.Delete('wcf\\data\\trackback\\blacklist\\entry\\TrackbackBlacklistEntryAction', '.jsJCPRow');
+			new WCF.Action.Delete('wcf\\data\\trackback\\blacklist\\entry\\TrackbackBlacklistEntryAction', '.jsTBERow');
 		});
 		//]]>
 	</script>
@@ -18,7 +18,7 @@
 	<nav>
 			<ul>
 				<li>
-					<a href="{link controller='TrackbackBlacklistEntryAdd'}{/link}" title="" class="button">
+					<a href="{link controller='TrackbackBlacklistEntryAdd'}{/link}" class="button">
 						<span class="icon icon16 icon-plus"></span> 
 						<span>{lang}wcf.trackback.blacklist.add{/lang}</span>
 					</a>
@@ -47,7 +47,7 @@
 			<tbody>
 				{content}
 					{foreach from=$objects item=entry}
-						<tr class="jsJCPRow">
+						<tr class="jsTBERow">
 							<td class="columnIcon">
 								<span class="icon icon16 icon-remove jsDeleteButton jsTooltip pointer" data-object-id="{@$entry->entryID}" title="{lang}wcf.global.button.delete{/lang}"></span>
 								{event name='buttons'}
@@ -75,7 +75,7 @@
 	<nav>
 		<ul>
 			<li>
-				<a href="{link controller='TrackbackBlacklistEntryAdd'}{/link}" title="" class="button">
+				<a href="{link controller='TrackbackBlacklistEntryAdd'}{/link}" class="button">
 					<span class="icon icon16 icon-plus"></span> 
 					<span>{lang}wcf.trackback.blacklist.add{/lang}</span>
 				</a>

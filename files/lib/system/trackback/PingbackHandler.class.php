@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\trackback;
-
 use wcf\util\TrackbackUtil; 
 use wcf\util\PingbackUtil;
 use wcf\data\object\type\ObjectTypeCache; 
@@ -42,6 +41,7 @@ class PingbackHandler {
 	 *
 	 * @param string $sourceURI
 	 * @param string $targetURI
+	 * @return array<mixed>
 	 */
 	public function ping($sourceURI, $targetURI) {
 		try {
@@ -87,7 +87,7 @@ class PingbackHandler {
 			
 			// read object
 			$objectType = ObjectTypeCache::getInstance()->getObjectType($objectTypeID); 
-			if ($objectType->getObjectID() != null) {
+			if ($objectType->getObjectID() !== null) {
 				$objectProccessor = $objectType->getProcessor();
 				if ($objectProccessor !== null) $object = $objectProccessor->getObjectByID($objectID); 
 			}
@@ -111,9 +111,6 @@ class PingbackHandler {
 				'error' => false,
 				'message' => 'Thanks for pinning! :)' // <-- we are polite :) 
 			);
-		} catch (\Exception $e) {
-			var_dump($e);
-			die();
 		} catch (\wcf\system\exception\UserInputException $ex) {
 			return array(
 				'error' => true,
