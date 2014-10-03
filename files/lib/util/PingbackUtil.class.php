@@ -143,10 +143,16 @@ final class PingbackUtil {
 	 * @param \wcf\data\ITrackbackableObject	$trackback
 	 */
 	public static function autoPing($text, \wcf\data\ITrackbackableObject $trackback) {
-		preg_match_all('~\[url\](https?:\/\/[a-zA-Z0-9\.:@\-]*\.?[a-zA-Z0-9äüö\-]+\.[A-Za-z]{2,8}(:[0-9]{1,4})?(\/[^#\]]*)?(#[^#]+)?)\[\/url\]~i', $text, $matches, PREG_SET_ORDER);
+		if (preg_match_all('~\[url\](https?:\/\/[a-zA-Z0-9\.:@\-]*\.?[a-zA-Z0-9äüö\-]+\.[A-Za-z]{2,8}(:[0-9]{1,4})?(\/[^#\]]*)?(#[^#]+)?)\[\/url\]~i', $text, $matches, PREG_SET_ORDER) !== false) {
+			foreach ($matches as $match) {
+				self::ping($match[1], $trackback);
+			}
+		}
 		
-		foreach ($matches as $match) {
-			self::ping($match[1], $trackback);
+		if (preg_match_all("~\[url='(https?:\/\/[a-zA-Z0-9\.:@\-]*\.?[a-zA-Z0-9äüö\-]+\.[A-Za-z]{2,8}(:[0-9]{1,4})?(\/[^#\]]*)?(#[^#]+)?)'\][^(\[\/url\])]*\[\/url\]~i", $text, $matches, PREG_SET_ORDER) !== false) {
+			foreach ($matches as $match) {
+				self::ping($match[1], $trackback);
+			}
 		}
 	}
 	
@@ -159,9 +165,17 @@ final class PingbackUtil {
 		$server = self::getPingbackLink($url);
 		
 		if ($server !== null) {
+			// we validate the server 
+			$server = parse_url($server); 
+			
+			if (!isset($server['scheme']) || !isset($server['host'])) {
+				// invalid url
+				return; 
+			}
+			
 			// we can ping it
 			$request = new HTTPRequest($server, array(), self::getPingRequest($trackback->getLink(), $url)); 
-			$request->execute(); 
+			$request->execute();
 		} 
 	}
 	
@@ -176,7 +190,7 @@ final class PingbackUtil {
 		$body = $request->getReply();
 
 		if (isset($body['headers']['X-Pingback'])) {
-			return $body['headers']['X-Pingback'][0]; 
+			return $body['headers']['X-Pingback']; 
 		}
 		
 		if (preg_match('#<link rel="pingback" href="([^"]+)" ?/?>#', $body['body'], $m)) {
