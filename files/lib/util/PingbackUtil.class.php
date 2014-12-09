@@ -173,9 +173,11 @@ final class PingbackUtil {
 				return; 
 			}
 			
-			// we can ping it
-			$request = new HTTPRequest($server, array(), self::getPingRequest($trackback->getLink(), $url)); 
-			$request->execute();
+			try { 
+				// we can ping it
+				$request = new HTTPRequest($server, array(), self::getPingRequest($trackback->getLink(), $url)); 
+				$request->execute();
+			} catch (\Exception $e) { /* ignore unknow HTTPServerErrorException && unhandled status code */ }
 		} 
 	}
 	
@@ -185,17 +187,19 @@ final class PingbackUtil {
 	 * @return null
 	 */
 	public static function getPingbackLink($url) {
-		$request = new HTTPRequest($url);
-		$request->execute();
-		$body = $request->getReply();
+		try {
+			$request = new HTTPRequest($url);
+			$request->execute();
+			$body = $request->getReply();
 
-		if (isset($body['headers']['X-Pingback'])) {
-			return $body['headers']['X-Pingback']; 
-		}
-		
-		if (preg_match('#<link rel="pingback" href="([^"]+)" ?/?>#', $body['body'], $m)) {
-			return $m[1];
-		}
+			if (isset($body['headers']['X-Pingback'])) {
+				return $body['headers']['X-Pingback']; 
+			}
+
+			if (preg_match('#<link rel="pingback" href="([^"]+)" ?/?>#', $body['body'], $m)) {
+				return $m[1];
+			}
+		} catch (\Exception $e) { /* ignore unknow HTTPServerErrorException && unhandled status code */ }
 		
 		return null; 
 	}
