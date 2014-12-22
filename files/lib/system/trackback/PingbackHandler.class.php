@@ -31,7 +31,7 @@ class PingbackHandler {
 		self::UNKNOWN_TARGET => 'The specified target URI does not exist.',
 		self::INVALID_TARGET => 'The specified target URI cannot be used as a target. It either doesn\'t exist, or it is not a pingback-enabled resource.',
 		self::DOUBLE => 'The pingback has already been registered.',
-		self::ACCESS_DENIED => 'Access denied.',
+		self::ACCESS_DENIED => 'Access denied. Maybe the host is blacklisted.',
 		self::COMMUNICATION_FAILED => 'The server could not communicate with an upstream server, or received an error from an upstream server, and therefore could not complete the request.', 
 		self::INTERNAL_ERROR => 'Unknown error.'
 	);
@@ -69,7 +69,15 @@ class PingbackHandler {
 				$title = null; 
 			}
 			
+                        // try to find an excerpt
+                        preg_match("/\<meta property=\"og:description\" content=\"(.*)\"\/? ?\>/", $body, $excerpt);
 			
+                        if (isset($excerpt[1])) {
+				$excerpt = $excerpt[1];
+			} else {
+				$excerpt = null; 
+			}
+                        
 			// fetch target
 			$objectTypeID = PingbackUtil::getObjectTypeFromURL($targetURI); 
 			$objectID = PingbackUtil::getObjectIDFromURL($targetURI); 
@@ -96,10 +104,10 @@ class PingbackHandler {
 				$this->throwException(self::INVALID_TARGET); 
 			}
 			
-			
 			$action = new \wcf\data\trackback\TrackbackAction(array(), 'create', array('data' => array(
 				'url' => $sourceURI,
-				'title' => $title,
+				'title' => $title ? $title : '',
+                                'excerpt' => $excerpt ? $excerpt : '',
 				'objectTypeID' => $objectType->getObjectID(),
 				'objectID' => $object->getObjectID(), 
 				'time' => TIME_NOW,
