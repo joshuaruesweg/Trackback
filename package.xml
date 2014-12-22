@@ -14,7 +14,7 @@
 	</authorinformation>
 	
 	<requiredpackages>
-		<requiredpackage minversion="2.1.0 Alpha 1">com.woltlab.wcf</requiredpackage>
+		<requiredpackage minversion="2.1.0 Beta 2">com.woltlab.wcf</requiredpackage>
 		<requiredpackage minversion="1.0.0">be.bastelstu.josh.xmlrpc</requiredpackage>
 	</requiredpackages>
 	
@@ -25,6 +25,7 @@
 		<instruction type="acpTemplate">acptemplates.tar</instruction>
 		
 		<!-- xml -->
+		<instruction type="language">language/*.xml</instruction>
 		<instruction type="option">option.xml</instruction>
 		<instruction type="userGroupOption">userGroupOption.xml</instruction>
 		<instruction type="objectTypeDefinition">objectTypeDefinition.xml</instruction>
@@ -45,6 +46,7 @@
 		<instruction type="acpTemplate">acptemplates.tar</instruction>
 		
 		<!-- xml -->
+		<instruction type="language">language/*.xml</instruction>
 		<instruction type="option">option.xml</instruction>
 		<instruction type="userGroupOption">userGroupOption.xml</instruction>
 		<instruction type="objectTypeDefinition">objectTypeDefinition.xml</instruction>
