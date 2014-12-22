@@ -5,7 +5,7 @@
 			<environment>user</environment>
 			<templatename>headInclude</templatename>
 			<eventname>metaTags</eventname>
-			<templatecode><![CDATA[{if MODULE_TRACKBACK}<link rel="pingback" href="{link controller='PingbackAction'}{/link}" />{/if}]]></templatecode>
+			<templatecode><![CDATA[{if MODULE_TRACKBACK}<link rel="pingback" href="{link controller='Pingback'}{/link}" />{/if}]]></templatecode>
 		</templatelistener>
 	</import>
 </data>
