@@ -5,13 +5,31 @@
 			<category name="user.message.trackback">
 				<parent>user.message</parent>
 			</category>
+                        
+                        <category name="mod.general.trackback">
+				<parent>mod.general</parent>
+			</category>
 		</categories>
 		
 		<options>
-			<option name="user.message.trackback.canUser">
+			<option name="user.message.trackback.canUse">
 				<categoryname>user.message.trackback</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
+			</option>
+                        
+                        <option name="mod.general.trackback.canBlock">
+				<categoryname>mod.general.trackback</categoryname>
+				<optiontype>boolean</optiontype>
+                                <defaultvalue>0</defaultvalue>
+				<moddefaultvalue>1</moddefaultvalue>
+			</option>
+                        
+                        <option name="mod.general.trackback.canDelete">
+				<categoryname>mod.general.trackback</categoryname>
+				<optiontype>boolean</optiontype>
+                                <defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
 			</option>
 		</options>
 	</import>

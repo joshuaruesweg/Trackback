@@ -46,7 +46,7 @@ class TrackbackCronjob extends AbstractCronjob {
 				$reply = $request->getReply();
 				$body = $reply['body'];
 				
-				if (strpos($body, $targetURI) === false) {
+				if (strpos($body, $targetURI) === false && TRACKBACK_CHECK_URL) {
 					$this->increaseFailCount($trackback);
 				} else {
 					// reset count

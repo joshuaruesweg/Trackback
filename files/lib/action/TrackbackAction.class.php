@@ -23,7 +23,7 @@ class TrackbackAction extends AbstractAction {
 	/**
 	 * @see \wcf\action\AbstractAction::$neededPermissions
 	 */
-	public $neededPermissions = array('user.message.trackback.canUser');
+	public $neededPermissions = array('user.message.trackback.canUse');
 	
 	/**
 	 * @see \wcf\action\AbstractAction::$neededModules

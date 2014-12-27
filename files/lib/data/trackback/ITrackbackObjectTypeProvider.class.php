@@ -21,4 +21,11 @@ interface ITrackbackObjectTypeProvider extends IObjectTypeProvider {
 	 * @return	boolean
 	 */
 	public function hasPermissions(ITrackbackableObject $object);
+	
+	/**
+	 * update the trackback count
+	 * 
+	 * @param integer $count
+	 */
+	public function updateTrackbackCount($count, \wcf\data\ITrackbackableObject $object); 
 }

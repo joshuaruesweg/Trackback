@@ -4,6 +4,8 @@
 		<item name="wcf.trackback.blacklist.item.add"><![CDATA[Eintrag hinzufügen]]></item>
 		<item name="wcf.trackback.blacklist.general"><![CDATA[Allgemein]]></item>
 		<item name="wcf.trackback.blacklist.host"><![CDATA[Host]]></item>
+		<item name="wcf.trackback.block"><![CDATA[Blockieren]]></item>
+		<item name="wcf.trackback.delete.confirmMessage"><![CDATA[Möchtest du wirklich diesen Trackback löschen?]]></item>
 	</category>
 	
 	<category name="wcf.acp.option">

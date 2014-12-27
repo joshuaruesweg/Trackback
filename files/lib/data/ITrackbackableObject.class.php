@@ -15,6 +15,7 @@ interface ITrackbackableObject extends ITitledObject, ILinkableObject, IMessage,
 	
 	/**
 	 * returns the objecttype name
+	 * 
 	 * @return string
 	 */
 	public static function getObjectTypeName();

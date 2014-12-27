@@ -1,0 +1,30 @@
+.trackback {
+	position: relative;
+}
+
+.trackbackList .buttonGroupNavigation {
+	position: absolute;
+	top: @wcfGapTiny;
+	right: @wcfGapMedium;
+	
+	> ul {
+		> li {
+			float: left;
+			opacity: 0;
+			
+			.transition(opacity, .1s);
+			
+			> a {
+				padding: @wcfGapTiny;
+			}
+		}
+	}
+}
+
+.trackbackContent:hover > .buttonGroupNavigation > ul > li {
+	opacity: 1;
+}
+
+.trackbackList .trackbackLoadNext {
+	text-align: center; 
+}

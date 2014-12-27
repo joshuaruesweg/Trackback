@@ -1,8 +1,10 @@
 <?php
 namespace wcf\data\trackback;
 use wcf\system\exception\UserInputException; 
+use wcf\system\exception\PermissionDeniedException; 
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\object\type\ObjectTypeCache; 
+use wcf\system\WCF; 
 
 /**
  * 
@@ -21,7 +23,7 @@ class TrackbackAction extends AbstractDatabaseObjectAction {
 	 */
 	protected $className = 'wcf\data\trackback\TrackbackEditor';
 	
-	public $permissionCreate = 'user.message.canAddTrackback'; 
+	public $permissionsDelete = array('mod.general.trackback.canDelete'); 
 	
 	/**
 	 * @see \wcf\data\AbstractDatabaseObjectAction::validateCreate()
@@ -71,27 +73,144 @@ class TrackbackAction extends AbstractDatabaseObjectAction {
 		}
 	}
 	
+	public function create() {
+		parent::create();
+		
+		// update trackback count for object
+		$objectType = ObjectTypeCache::getInstance()->getObjectType($this->parameters['data']['objectTypeID']);
+		$proccessor = $objectType->getProcessor();
+		$object = $proccessor->getObjectByID($this->parameters['data']['objectID']); 
+		$proccessor->updateTrackbackCount(1, $object); 
+	}
+	
 	/**
-	 * marks a trackback as spam
+	 * toogle block for trackbacks
 	 */
-	public function markAsSpam() {
-		$action = new TrackbackAction($this->getObjects(), 'update', array('data' => array('isBlocked' => 1))); 
-		$action->executeAction(); 
+	public function toogleBlock() {
+		$block = array(); 
+		$unblock = array(); 
 		
 		foreach ($this->getObjects() as $object) {
-			$url = parse_url($object->url); 
-			$host = $url['host']; 
+			if ($object->isBlocked) {
+				$unblock[$object->getObjectID()] = $object; 
+			} else {
+				$block[$object->getObjectID()] = $object; 
+			}
+		}
+		
+		if (count($unblock)) {
+			$action = new TrackbackAction($unblock, 'update', array('data' => array('isBlocked' => 0))); 
+			$action->executeAction();
+		}
+		
+		if (count($block)) {
+			$action = new TrackbackAction($block, 'update', array('data' => array('isBlocked' => 1))); 
+			$action->executeAction();
+		}
+		
+		return array(
+			'blocked' => array_keys($block), 
+			'unblocked' => array_keys($unblock)
+		); 
+	}
+	
+	/**
+	 * validate the action toogleBlock
+	 */
+	public function validateToogleBlock() {
+		WCF::getSession()->checkPermissions(array('mod.general.trackback.canBlock'));
+		
+		if (empty($this->objects)) {
+			$this->readObjects(); 
 			
-			$action = new \wcf\data\trackback\blacklist\entry\TrackbackBlacklistEntryAction(array(), 'create', array('data' => array('host' => $host)));
-			$action->executeAction(); 
+			if (empty($this->objects)) {
+				throw new UserInputException('objectIDs');
+			}
 		}
 	}
 	
 	/**
-	 * validate the action markAsSpam
+	 * remove a trackback
 	 */
-	public function validateMarkAsSpam() {
-		// @TODO permission check.. 
+	public function remove() {
+		$objectIDs = array();
+		
+		foreach ($this->objects as $object) {
+			$objectIDs[] = $object->getObjectID();
+			
+			if (!isset($objectTypes[$object->objectTypeID][$object->objectID])) {
+				$objectTypes[$object->objectTypeID][$object->objectID] = 0; 
+			}
+			$objectTypes[$object->objectTypeID][$object->objectID]++;
+		}
+		
+		parent::delete();
+		
+		foreach ($objectTypes as $objectTypeID => $objects) {  
+			// update trackback count for object
+			$objectType = ObjectTypeCache::getInstance()->getObjectType($objectTypeID);
+			$proccessor = $objectType->getProcessor();
+			
+			foreach ($objects as $objectID => $count) {
+				$object = $proccessor->getObjectByID($objectID); 
+				$proccessor->updateTrackbackCount(-1 * $count, $object); 
+			}
+		}
+		
+		return array(
+			'objectIDs' => $objectIDs
+		);
+	}
+	
+	/**
+	 * validate remove a trackback
+	 */
+	public function validateRemove() {
+		parent::validateDelete(); 
+	}
+	
+	public function loadTrackbacks() {
+		$trackbackList = new TrackbackList(); 
+		$trackbackList->getConditionBuilder()->add('trackback.time < ?', array($this->parameters['lastSeenTime'])); 
+		$trackbackList->sqlLimit = 10; 
+		$trackbackList->sqlOrderBy = 'trackback.time DESC'; 
+		$trackbackList->readObjects(); 
+		
+		$objects = $trackbackList->getObjects(); 
+		$last = end($objects); 
+		
+		WCF::getTPL()->assign(array(
+			'trackbacks' => $trackbackList->getObjects()
+		));
+		
+		return array(
+			'template' => WCF::getTPL()->fetch('trackbackList'), 
+			'count' => $trackbackList->count(), 
+			'lastSeenTime' => $trackbackList->count() ? $last->time : $this->parameters['lastSeenTime']
+		);
+	}
+	
+	public function validateLoadTrackbacks() {
+		$this->readString('objectType'); 
+		$this->readInteger('objectID'); 
+		$this->readInteger('lastSeenTime'); 
+		
+		$objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.hg-202.trackback.trackback', $this->parameters['objectType']);
+		
+		if ($objectType === null) {
+			throw new UserInputException('objectType');
+		}
+		
+		$proccessor = $objectType->getProcessor();
+		$object = $proccessor->getObjectByID($this->parameters['objectID']); 
+		
+		if (!$object || !$object->getObjectID()) {
+			throw new UserInputException('objectID');
+		}
+		
+		if (!$object->canRead()) {
+			throw new PermissionDeniedException(); 
+		}
 	}
 }
  
