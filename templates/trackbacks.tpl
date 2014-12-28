@@ -5,11 +5,11 @@
 		<span class='info'>{lang}wcf.trackback.noTrackbacks{/lang}</span>
 	{/if}
 </ul>
-<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Trackback{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@LAST_UPDATE_TIME}"></script>
+<script data-relocate="true" src="{@$__wcf->getPath()}js/com.hg-202.trackback{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@LAST_UPDATE_TIME}"></script>
 <script data-relocate="true">
 	//<![CDATA[
 	$(function() {
-		new WCF.Trackback.Handler('{$objectType}', {$objectID}, {$trackbacks|count}, {$trackbackLastSeenTime}); 
+		new com.hg202.Trackback('{$objectType}', {$objectID}, {$trackbacks|count}, {$trackbackLastSeenTime}); 
 	});
 	//]]>
 </script>
