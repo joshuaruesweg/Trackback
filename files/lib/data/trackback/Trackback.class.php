@@ -38,9 +38,11 @@ class Trackback extends DatabaseObject {
         }
         
 	/**
-	 * returns the ip address
+	 * Returns the IP address of the creator. 
+	 * 
+	 * @return String the host
 	 */
-	public function getIP() {
+	public function getIPAddress() {
 		return UserUtil::convertIPv6To4($this->ipAddress);
 	}
 	
