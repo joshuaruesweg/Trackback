@@ -137,7 +137,7 @@
 			do event.preventDefault
 
 			WCF.System.Confirmation.show (WCF.Language.get('wcf.trackback.delete.confirmMessage')), $.proxy (action) =>
-				if action 'confirm'
+				if action == 'confirm'
 					@_proxy.setOption 'data',
 						actionName: 'remove'
 						className: 'wcf\\data\\trackback\\TrackbackAction'
@@ -154,10 +154,13 @@
 				do @_dialog.hide
 				@_dialog.appendTo document.body
 			
-			@_dialog.html ip
-			@_dialog.wcfDialog title: 
-				WCF.Language.get 'wcf.trackback.ipaddress'
-			@_dialog.wcfDialog 'render'
+			if ip?
+				@_dialog.html ip
+				@_dialog.wcfDialog title: 
+					WCF.Language.get 'wcf.trackback.ipaddress'
+				@_dialog.wcfDialog 'render'
+			else 
+				console.debug "ip not found"
 			
 		_success: (data, jqXHR, textStatus) -> 
 			switch data.actionName
