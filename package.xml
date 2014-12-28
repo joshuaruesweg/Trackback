@@ -4,7 +4,7 @@
 		<packagename><![CDATA[Trackback]]></packagename>
 		<packagedescription><![CDATA[A Trackback-system.]]></packagedescription>
 		<packagedescription language="de"><![CDATA[Ein Trackback-System.]]></packagedescription>
-		<version>1.0.0 Alpha 2</version>
+		<version>1.0.0 Alpha 1</version>
 		<date>2014-09-08</date>
 	</packageinformation>
 	
@@ -15,7 +15,7 @@
 	
 	<requiredpackages>
 		<requiredpackage minversion="2.1.0 Alpha 1">com.woltlab.wcf</requiredpackage>
-		<requiredpackage minversion="1.0.0">be.bastelstu.josh.xmlrpc</requiredpackage>
+		<requiredpackage minversion="1.0.0" file="requirements/be.bastelstu.josh.xmlrpc.tar">be.bastelstu.josh.xmlrpc</requiredpackage>
 	</requiredpackages>
 	
 	<instructions type="install">
