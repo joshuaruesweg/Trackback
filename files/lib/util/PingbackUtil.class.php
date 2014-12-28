@@ -79,13 +79,10 @@ final class PingbackUtil {
 					$application = 'wcf';
 				}
 			}
-			$objectTypeController = $type->controller;
 			
 			foreach ($controllers[$application] as $pageType) {
-				foreach ($pageType as $page) {
-					if (isset($page[$ciController])) {
-						return $type->getObjectID();
-					}
+				if (isset($pageType[$ciController])) {
+					return $type->getObjectID();
 				}
 			}
 		}
@@ -166,9 +163,9 @@ final class PingbackUtil {
 		
 		if ($server !== null) {
 			// we validate the server 
-			$server = parse_url($server); 
+			$splitURL = parse_url($server);
 			
-			if (!isset($server['scheme']) || !isset($server['host'])) {
+			if (!isset($splitURL['scheme']) || !isset($splitURL['host'])) {
 				// invalid url
 				return; 
 			}
@@ -178,7 +175,7 @@ final class PingbackUtil {
 				$request = new HTTPRequest($server, array(), self::getPingRequest($trackback->getLink(), $url)); 
 				$request->execute();
 			} catch (\Exception $e) { /* ignore unknow HTTPServerErrorException && unhandled status code */ }
-		} 
+		}
 	}
 	
 	/**
