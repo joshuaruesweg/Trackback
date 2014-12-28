@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\trackback; 
 use wcf\data\DatabaseObject; 
+use wcf\util\UserUtil; 
 
 /**
  * 
@@ -36,6 +37,13 @@ class Trackback extends DatabaseObject {
 		return false; 
         }
         
+	/**
+	 * returns the ip address
+	 */
+	public function getIP() {
+		return UserUtil::convertIPv6To4($this->ipAddress);
+	}
+	
 	/**
 	 * Returns a list of trackbacks.
 	 * 

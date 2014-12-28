@@ -1,5 +1,5 @@
 {foreach from=$trackbacks item="trackback"}
-	<li class="trackback{if $trackback->isBlocked} trackbackBlocked{/if} jsTrackback" data-trackback-id="{@$trackback->getObjectID()}" data-blocked="{$trackback->isBlocked}" data-has-ip-address="{if $trackback->ipAddress}1{else}0{/if}"{if $trackback->ipAddress && $__wcf->session->getPermission('admin.user.canViewIpAddress') && LOG_IP_ADDRESS} data-ip-address="{$trackback->ipAddress}"{/if}>
+	<li class="trackback{if $trackback->isBlocked} trackbackBlocked{/if} jsTrackback" data-trackback-id="{@$trackback->getObjectID()}" data-blocked="{$trackback->isBlocked}" data-has-ip-address="{if $trackback->ipAddress}1{else}0{/if}"{if $trackback->ipAddress && $__wcf->session->getPermission('admin.user.canViewIpAddress') && LOG_IP_ADDRESS} data-ip-address="{$trackback->getIP()}"{/if}>
 		<div>
 			<div class="trackbackContent">
 				<div class="containerHeadline">
