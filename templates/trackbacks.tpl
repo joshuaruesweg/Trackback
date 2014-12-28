@@ -2,7 +2,7 @@
 	{if $trackbacks|count}
 		{include file='trackbackList'}
 	{else}
-		<span class='info'>{lang}wcf.trackback.noTrackbacks{/lang}</span>
+		<div class='info'>{lang}wcf.trackback.noTrackbacks{/lang}</div>
 	{/if}
 </ul>
 <script data-relocate="true" src="{@$__wcf->getPath()}js/com.hg-202.trackback{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@LAST_UPDATE_TIME}"></script>

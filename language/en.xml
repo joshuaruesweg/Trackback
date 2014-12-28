@@ -9,6 +9,7 @@
 		<item name="wcf.trackback.delete.confirmMessage"><![CDATA[@TODO Möchtest du diesen Trackback wirklich löschen?]]></item>
 		<item name="wcf.trackback.more"><![CDATA[Load more…]]></item>
 		<item name="wcf.trackback.ipaddress"><![CDATA[IP addresses]]></item>
+		<item name="wcf.trackback.noTrackbacks"><![CDATA[@TODO Es wurden noch keine Trackbacks eingetragen.]]></item>
 	</category>
 	
 	<category name="wcf.acp.option">
