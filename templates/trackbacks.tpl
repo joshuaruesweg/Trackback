@@ -5,8 +5,8 @@
 		<span class='info'>{lang}wcf.trackback.noTrackbacks{/lang}</span>
 	{/if}
 </ul>
-<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Trackback{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@LAST_UPDATE_TIME}" type="text/javascript"></script>
-<script data-relocate="true" type="text/javascript">
+<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Trackback{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@LAST_UPDATE_TIME}"></script>
+<script data-relocate="true">
 	//<![CDATA[
 	$(function() {
 		new WCF.Trackback.Handler('{$objectType}', {$objectID}, {$trackbacks|count}, {$trackbackLastSeenTime}); 
