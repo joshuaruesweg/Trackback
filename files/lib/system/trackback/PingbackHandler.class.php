@@ -70,7 +70,7 @@ class PingbackHandler {
 			}
 			
                         // try to find an excerpt
-                        preg_match("/\<meta property=\"og:description\" content=\"(.*)\"\/? ?\>/", $body, $excerpt);
+                        preg_match("/\<meta property=\"og:description\" content=\"[^\"]+\"\ ?\/?>/", $body, $excerpt);
 			
                         if (isset($excerpt[1])) {
 				$excerpt = $excerpt[1];
@@ -102,6 +102,16 @@ class PingbackHandler {
 			
 			if ($object === null) {
 				$this->throwException(self::INVALID_TARGET); 
+			}
+			
+			// check whether it has already been registered
+			$list = new \wcf\data\trackback\TrackbackList(); 
+			$list->getConditionBuilder()->add('url = ?', array($sourceURI));
+			$list->getConditionBuilder()->add('objectTypeID = ?', array($objectType->getObjectID()));
+			$list->getConditionBuilder()->add('objectID = ?', array($object->getObjectID()));
+			
+			if ($list->countObjects()) {
+				$this->throwException(self::DOUBLE); 
 			}
 			
 			$action = new \wcf\data\trackback\TrackbackAction(array(), 'create', array('data' => array(
