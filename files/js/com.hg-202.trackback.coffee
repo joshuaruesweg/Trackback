@@ -128,7 +128,7 @@
 			do event.preventDefault
 			
 			@_proxy.setOption 'data',
-				actionName: 'toogleBlock' 
+				actionName: 'toggleBlock' 
 				className: 'wcf\\data\\trackback\\TrackbackAction'
 				objectIDs: [$(event.currentTarget).data 'trackbackID']
 			do @_proxy.sendRequest
@@ -167,7 +167,7 @@
 				when 'remove' 
 					for objectID in data.returnValues.objectIDs
 						do $("li.trackback[data-trackback-id='#{objectID}']").remove
-				when 'toogleBlock'
+				when 'toggleBlock'
 					for objectID in data.returnValues.blocked
 						$("li.trackback[data-trackback-id='#{objectID}']").find(".fa-ban").removeClass("fa-ban").addClass "fa-undo"
 						$("li.trackback[data-trackback-id='#{objectID}']").addClass "trackbackBlocked"

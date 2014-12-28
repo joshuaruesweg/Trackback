@@ -84,9 +84,9 @@ class TrackbackAction extends AbstractDatabaseObjectAction {
 	}
 	
 	/**
-	 * toogle block for trackbacks
+	 * toggle block for trackbacks
 	 */
-	public function toogleBlock() {
+	public function toggleBlock() {
 		$block = array(); 
 		$unblock = array(); 
 		
@@ -115,9 +115,9 @@ class TrackbackAction extends AbstractDatabaseObjectAction {
 	}
 	
 	/**
-	 * validate the action toogleBlock
+	 * validate the action toggleBlock
 	 */
-	public function validateToogleBlock() {
+	public function validateToggleBlock() {
 		WCF::getSession()->checkPermissions(array('mod.general.trackback.canBlock'));
 		
 		if (empty($this->objects)) {
