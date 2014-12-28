@@ -5,7 +5,10 @@
 		<item name="wcf.trackback.blacklist.general"><![CDATA[Allgemein]]></item>
 		<item name="wcf.trackback.blacklist.host"><![CDATA[Host]]></item>
 		<item name="wcf.trackback.block"><![CDATA[Blockieren]]></item>
-		<item name="wcf.trackback.delete.confirmMessage"><![CDATA[Möchtest du wirklich diesen Trackback löschen?]]></item>
+		<item name="wcf.trackback.unblock"><![CDATA[Freigeben]]></item>
+		<item name="wcf.trackback.delete.confirmMessage"><![CDATA[Möchtest du diesen Trackback wirklich löschen?]]></item>
+		<item name="wcf.trackback.more"><![CDATA[Weitere Trackbacks laden…]]></item>
+		<item name="wcf.trackback.ipaddress"><![CDATA[IP-Adresse]]></item>
 	</category>
 	
 	<category name="wcf.acp.option">

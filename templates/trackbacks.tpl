@@ -9,6 +9,14 @@
 <script data-relocate="true">
 	//<![CDATA[
 	$(function() {
+		WCF.Language.addObject({
+			'wcf.trackback.more': '{lang}wcf.trackback.more{/lang}',
+			'wcf.trackback.delete.confirmMessage': '{lang}wcf.trackback.delete.confirmMessage{/lang}',
+			'wcf.trackback.unblock': '{lang}wcf.trackback.unblock{/lang}',
+			'wcf.trackback.block': '{lang}wcf.trackback.block{/lang}', 
+			'wcf.trackback.ipaddress': '{lang}wcf.trackback.ipaddress{/lang}'
+		});
+		
 		new com.hg202.Trackback('{$objectType}', {$objectID}, {$trackbacks|count}, {$trackbackLastSeenTime}); 
 	});
 	//]]>
